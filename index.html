@@ -1,3 +1,23 @@
+// 🔒 Sécurise le parsing JSON (évite les crash)
+function safeParse(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn("Corruption détectée pour", key);
+    return fallback;
+  }
+}
+
+// 💾 Sauvegarde safe
+function safeSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.error("Erreur sauvegarde", key, e);
+  }
+}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
